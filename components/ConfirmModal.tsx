@@ -58,12 +58,16 @@ export default function ConfirmModal({ isOpen, onClose }: Props) {
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <>
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
         onClick={handleClose}
       />
+
+      {/* Scrollable overlay — lets modal shrink when keyboard opens */}
+      <div className="fixed inset-0 z-50 overflow-y-auto overscroll-contain">
+        <div className="flex min-h-full items-center justify-center p-4">
 
       {/* Sheet / Dialog */}
       <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden">
@@ -193,6 +197,9 @@ export default function ConfirmModal({ isOpen, onClose }: Props) {
           </form>
         )}
       </div>
-    </div>
+
+        </div>
+      </div>
+    </>
   )
 }
