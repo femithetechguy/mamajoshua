@@ -2,11 +2,12 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { getSiteConfig } from '@/lib/config'
 
-const config = getSiteConfig()
-
-export const metadata: Metadata = {
-  title: config.pageTitle,
-  description: config.pageDescription,
+export async function generateMetadata(): Promise<Metadata> {
+  const config = getSiteConfig()
+  return {
+    title: config.pageTitle,
+    description: config.pageDescription,
+  }
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

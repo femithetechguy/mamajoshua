@@ -1,1 +1,38 @@
-[]
+[
+  {
+    "id": "d1a2b3c4-0001-4000-a000-000000000001",
+    "fullName": "Sarah Mitchell",
+    "displayName": "Sarah M.",
+    "amount": 600,
+    "anonymous": false,
+    "status": "approved",
+    "submittedAt": "2026-06-29T14:23:00.000Z"
+  },
+  {
+    "id": "d1a2b3c4-0002-4000-a000-000000000002",
+    "fullName": "David Kolawole",
+    "displayName": "David K.",
+    "amount": 750,
+    "anonymous": false,
+    "status": "approved",
+    "submittedAt": "2026-06-28T09:15:00.000Z"
+  },
+  {
+    "id": "d1a2b3c4-0003-4000-a000-000000000003",
+    "fullName": "Anonymous Donor",
+    "displayName": "Anonymous",
+    "amount": 300,
+    "anonymous": true,
+    "status": "approved",
+    "submittedAt": "2026-06-27T19:45:00.000Z"
+  },
+  {
+    "id": "d1a2b3c4-0004-4000-a000-000000000004",
+    "fullName": "Emmanuel Okafor",
+    "displayName": "Emmanuel O.",
+    "amount": 350,
+    "anonymous": false,
+    "status": "approved",
+    "submittedAt": "2026-06-26T11:30:00.000Z"
+  }
+]
