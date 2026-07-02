@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function ConfirmModal({ isOpen, onClose }: Props) {
-  const [form, setForm] = useState({ fullName: '', amount: '', anonymous: false })
+  const [form, setForm] = useState({ fullName: '', amount: '', contact: '', anonymous: false })
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
 
   // Close on Escape
@@ -37,6 +37,7 @@ export default function ConfirmModal({ isOpen, onClose }: Props) {
         body: JSON.stringify({
           fullName: form.fullName,
           amount: Number(form.amount),
+          contact: form.contact,
           anonymous: form.anonymous,
         }),
       })
@@ -50,7 +51,7 @@ export default function ConfirmModal({ isOpen, onClose }: Props) {
     onClose()
     // reset after animation
     setTimeout(() => {
-      setForm({ fullName: '', amount: '', anonymous: false })
+      setForm({ fullName: '', amount: '', contact: '', anonymous: false })
       setStatus('idle')
     }, 200)
   }
@@ -144,6 +145,20 @@ export default function ConfirmModal({ isOpen, onClose }: Props) {
                   className="w-full border border-gray-200 rounded-xl pl-8 pr-4 py-2.5 text-base focus:outline-none focus:ring-2 focus:ring-blue-400 bg-gray-50"
                 />
               </div>
+            </div>
+
+            {/* Contact */}
+            <div>
+              <label className="block text-xs font-semibold text-gray-700 mb-1.5 uppercase tracking-wide">
+                Phone or email <span className="text-gray-400 normal-case font-normal tracking-normal">— optional</span>
+              </label>
+              <input
+                type="text"
+                value={form.contact}
+                onChange={e => setForm(f => ({ ...f, contact: e.target.value }))}
+                placeholder="For verification only"
+                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-base focus:outline-none focus:ring-2 focus:ring-blue-400 bg-gray-50"
+              />
             </div>
 
             {/* Display preference */}
