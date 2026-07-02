@@ -123,7 +123,7 @@ export default function ConfirmModal({ isOpen, onClose }: Props) {
                 value={form.fullName}
                 onChange={e => setForm(f => ({ ...f, fullName: e.target.value }))}
                 placeholder="Maria Rodriguez"
-                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 bg-gray-50"
+                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-base focus:outline-none focus:ring-2 focus:ring-blue-400 bg-gray-50"
               />
             </div>
 
@@ -141,7 +141,7 @@ export default function ConfirmModal({ isOpen, onClose }: Props) {
                   value={form.amount}
                   onChange={e => setForm(f => ({ ...f, amount: e.target.value }))}
                   placeholder="100"
-                  className="w-full border border-gray-200 rounded-xl pl-8 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 bg-gray-50"
+                  className="w-full border border-gray-200 rounded-xl pl-8 pr-4 py-2.5 text-base focus:outline-none focus:ring-2 focus:ring-blue-400 bg-gray-50"
                 />
               </div>
             </div>

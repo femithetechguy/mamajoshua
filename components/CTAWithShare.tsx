@@ -29,12 +29,20 @@ export default function CTAWithShare({ message }: { message: string }) {
     <>
       <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 space-y-4">
 
+        {/* Step 2 label */}
+        <div className="flex items-center gap-2">
+          <div className="w-5 h-5 rounded-full bg-gray-900 flex items-center justify-center shrink-0">
+            <span className="text-[10px] font-black text-white leading-none">2</span>
+          </div>
+          <span className="text-sm font-bold text-gray-900">Confirm your donation</span>
+        </div>
+
         {/* CTA button */}
         <button
           onClick={() => setOpen(true)}
           className="flex items-center justify-center gap-2 w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold py-3.5 rounded-xl transition-colors text-sm shadow-md shadow-blue-200"
         >
-          I already donated — confirm here
+          Confirm my donation
           <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
           </svg>
