@@ -92,10 +92,10 @@ export default async function Image() {
                 lineHeight: 1,
                 letterSpacing: -1,
               }}>
-                ${total.toLocaleString()}
+                {`$${total.toLocaleString()}`}
               </div>
               <div style={{ color: '#475569', fontSize: 20 }}>
-                raised of ${config.goal.toLocaleString()} goal · {donors.length} donation{donors.length !== 1 ? 's' : ''}
+                {`raised of $${config.goal.toLocaleString()} goal · ${donors.length} donation${donors.length !== 1 ? 's' : ''}`}
               </div>
             </div>
 
@@ -108,7 +108,7 @@ export default async function Image() {
                 lineHeight: 1,
                 letterSpacing: -1,
               }}>
-                {pctLabel}%
+                {`${pctLabel}%`}
               </div>
               <div style={{ color: '#475569', fontSize: 20 }}>
                 funded
