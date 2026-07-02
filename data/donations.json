@@ -3,36 +3,90 @@
     "id": "d1a2b3c4-0001-4000-a000-000000000001",
     "fullName": "Sarah Mitchell",
     "displayName": "Sarah M.",
-    "amount": 600,
+    "amount": 200,
     "anonymous": false,
     "status": "approved",
-    "submittedAt": "2026-06-29T14:23:00.000Z"
+    "submittedAt": "2026-06-30T14:23:00.000Z"
   },
   {
     "id": "d1a2b3c4-0002-4000-a000-000000000002",
     "fullName": "David Kolawole",
     "displayName": "David K.",
-    "amount": 750,
+    "amount": 150,
     "anonymous": false,
     "status": "approved",
-    "submittedAt": "2026-06-28T09:15:00.000Z"
+    "submittedAt": "2026-06-30T09:15:00.000Z"
   },
   {
     "id": "d1a2b3c4-0003-4000-a000-000000000003",
     "fullName": "Anonymous Donor",
     "displayName": "Anonymous",
-    "amount": 300,
+    "amount": 100,
     "anonymous": true,
     "status": "approved",
-    "submittedAt": "2026-06-27T19:45:00.000Z"
+    "submittedAt": "2026-06-29T19:45:00.000Z"
   },
   {
     "id": "d1a2b3c4-0004-4000-a000-000000000004",
     "fullName": "Emmanuel Okafor",
     "displayName": "Emmanuel O.",
-    "amount": 350,
+    "amount": 250,
     "anonymous": false,
     "status": "approved",
-    "submittedAt": "2026-06-26T11:30:00.000Z"
+    "submittedAt": "2026-06-29T11:30:00.000Z"
+  },
+  {
+    "id": "d1a2b3c4-0005-4000-a000-000000000005",
+    "fullName": "Grace Adeyemi",
+    "displayName": "Grace A.",
+    "amount": 150,
+    "anonymous": false,
+    "status": "approved",
+    "submittedAt": "2026-06-28T16:00:00.000Z"
+  },
+  {
+    "id": "d1a2b3c4-0006-4000-a000-000000000006",
+    "fullName": "Michael Thompson",
+    "displayName": "Michael T.",
+    "amount": 100,
+    "anonymous": false,
+    "status": "approved",
+    "submittedAt": "2026-06-28T10:20:00.000Z"
+  },
+  {
+    "id": "d1a2b3c4-0007-4000-a000-000000000007",
+    "fullName": "Anonymous Donor",
+    "displayName": "Anonymous",
+    "amount": 200,
+    "anonymous": true,
+    "status": "approved",
+    "submittedAt": "2026-06-27T20:10:00.000Z"
+  },
+  {
+    "id": "d1a2b3c4-0008-4000-a000-000000000008",
+    "fullName": "Jennifer Obi",
+    "displayName": "Jennifer O.",
+    "amount": 150,
+    "anonymous": false,
+    "status": "approved",
+    "submittedAt": "2026-06-27T08:45:00.000Z"
+  },
+  {
+    "id": "d1a2b3c4-0009-4000-a000-000000000009",
+    "fullName": "Anonymous Donor",
+    "displayName": "Anonymous",
+    "amount": 100,
+    "anonymous": true,
+    "status": "approved",
+    "submittedAt": "2026-06-26T15:30:00.000Z"
+  },
+  {
+    "id": "d1a2b3c4-0010-4000-a000-000000000010",
+    "fullName": "Pastor James Eze",
+    "displayName": "Pastor James E.",
+    "amount": 100,
+    "anonymous": false,
+    "status": "approved",
+    "submittedAt": "2026-06-26T09:00:00.000Z"
   }
 ]
