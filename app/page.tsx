@@ -177,23 +177,31 @@ export default async function Home() {
             {/* Recent donations */}
             {approved.length > 0 && (
               <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-                <h3 className="font-bold text-gray-900 text-sm mb-4">Recent donations</h3>
-                <ul className="divide-y divide-gray-50">
-                  {approved.map((d, i) => (
-                    <li key={d.id} className="flex items-center gap-3 py-2.5 first:pt-0 last:pb-0">
-                      <div className={`w-9 h-9 rounded-full text-white flex items-center justify-center text-xs font-bold shrink-0 ${AVATAR_COLORS[i % AVATAR_COLORS.length]}`}>
-                        {d.anonymous ? 'A' : getInitials(d.displayName)}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold text-gray-900 truncate">{d.displayName}</p>
-                        <p className="text-xs text-gray-400">{timeAgo(d.submittedAt)}</p>
-                      </div>
-                      <span className="text-sm font-bold text-gray-800 shrink-0">
-                        ${d.amount.toLocaleString()}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+                <h3 className="font-bold text-gray-900 text-sm mb-3">Recent donations</h3>
+
+                {/* Scrollable list — ~4 rows visible, fade hint at bottom */}
+                <div className="relative">
+                  <ul className="divide-y divide-gray-50 max-h-[260px] overflow-y-auto pr-1 scrollbar-thin">
+                    {approved.map((d, i) => (
+                      <li key={d.id} className="flex items-center gap-3 py-2.5 first:pt-0 last:pb-0">
+                        <div className={`w-9 h-9 rounded-full text-white flex items-center justify-center text-xs font-bold shrink-0 ${AVATAR_COLORS[i % AVATAR_COLORS.length]}`}>
+                          {d.anonymous ? 'A' : getInitials(d.displayName)}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-semibold text-gray-900 truncate">{d.displayName}</p>
+                          <p className="text-xs text-gray-400">{timeAgo(d.submittedAt)}</p>
+                        </div>
+                        <span className="text-sm font-bold text-gray-800 shrink-0">
+                          ${d.amount.toLocaleString()}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                  {/* Bottom fade hint */}
+                  {approved.length > 4 && (
+                    <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-white to-transparent pointer-events-none rounded-b-xl" />
+                  )}
+                </div>
               </div>
             )}
 
