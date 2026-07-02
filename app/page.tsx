@@ -1,10 +1,6 @@
 import { getApprovedDonations, getTotalRaised } from '@/lib/donations'
+import { getSiteConfig } from '@/lib/config'
 import { Donation } from '@/types'
-
-const GOAL = 10000
-const ORGANIZER_NAME = 'Family Member'    // ← update
-const DECEASED_NAME = 'Mama Joshua'       // ← update
-const ZELLE_CONTACT = 'your@email.com'   // ← update
 
 function timeAgo(dateStr: string): string {
   const diff = Date.now() - new Date(dateStr).getTime()
@@ -18,9 +14,10 @@ function timeAgo(dateStr: string): string {
 }
 
 export default async function Home() {
+  const config = getSiteConfig()
   const approved: Donation[] = getApprovedDonations()
   const totalRaised = getTotalRaised()
-  const progressPct = Math.min((totalRaised / GOAL) * 100, 100)
+  const progressPct = Math.min((totalRaised / config.goal) * 100, 100)
 
   return (
     <main className="max-w-xl mx-auto px-4 py-8 space-y-8">
@@ -36,10 +33,10 @@ export default async function Home() {
       {/* Header */}
       <div>
         <h1 className="text-2xl font-semibold text-gray-900">
-          Help Us Lay {DECEASED_NAME} to Rest
+          Help Us Lay {config.deceasedName} to Rest
         </h1>
         <p className="mt-1 text-sm text-gray-500">
-          Organized by {ORGANIZER_NAME} · Family Member
+          Organized by {config.organizerName}
         </p>
       </div>
 
@@ -47,7 +44,7 @@ export default async function Home() {
       <div className="space-y-2">
         <div className="flex justify-between text-sm font-medium text-gray-700">
           <span>${totalRaised.toLocaleString()} raised</span>
-          <span>${GOAL.toLocaleString()} goal</span>
+          <span>${config.goal.toLocaleString()} goal</span>
         </div>
         <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
           <div
@@ -64,25 +61,16 @@ export default async function Home() {
       <div className="border border-gray-200 rounded-lg p-5 bg-white space-y-1">
         <p className="font-medium text-gray-800">How to donate via Zelle</p>
         <p className="text-sm text-gray-600">
-          Send to: <span className="font-mono text-gray-900">{ZELLE_CONTACT}</span>
+          Send to: <span className="font-mono text-gray-900">{config.zelle.contact}</span>
         </p>
-        <p className="text-sm text-gray-600">Include your name in the memo.</p>
+        <p className="text-sm text-gray-600">{config.zelle.instructions}</p>
       </div>
 
       {/* Story */}
       <div className="text-gray-700 space-y-3 text-sm leading-relaxed">
-        <p>
-          Our beloved {DECEASED_NAME} passed away and left behind a family that is grieving deeply.
-          We are reaching out to our community for support during this difficult time.
-        </p>
-        <p>
-          The funds raised will go directly toward funeral arrangements, burial costs, and
-          ensuring that {DECEASED_NAME} receives a dignified farewell surrounded by love.
-        </p>
-        <p>
-          Every contribution, no matter the size, means the world to us. Thank you for
-          standing with our family in this moment of loss.
-        </p>
+        {config.story.map((paragraph, i) => (
+          <p key={i}>{paragraph}</p>
+        ))}
       </div>
 
       {/* Confirm link */}

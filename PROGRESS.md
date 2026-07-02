@@ -1,5 +1,26 @@
 # mamajoshua — Progress Log
 
+## Session 2 — 2026-07-01
+
+### Work Done
+
+**FTTG-78 — Content layer added:**
+- `data/site.json` — all site copy/config as data: `pageTitle`, `pageDescription`, `deceasedName`, `organizerName`, `goal`, `zelle.{contact,instructions}`, `story[]`
+- `lib/config.ts` — `getSiteConfig()` reads and parses `data/site.json`, exports `SiteConfig` type
+- `app/layout.tsx` — metadata now sourced from `getSiteConfig()` instead of hardcoded strings; also carries `suppressHydrationWarning` on `<html>`/`<body>` (fixes browser-extension-injected-attribute hydration mismatch)
+- `app/page.tsx` — removed hardcoded `GOAL`/`ORGANIZER_NAME`/`DECEASED_NAME`/`ZELLE_CONTACT` constants and inline story paragraphs; now reads everything from `getSiteConfig()`
+
+### Pending
+
+- [ ] Git setup: initial commit on `main`, push `main` + `develop` to https://github.com/femithetechguy/mamajoshua
+- [ ] Update `data/site.json` with real values before launch (`goal`, `organizerName`, `deceasedName`, `zelle.contact`, `story`)
+- [ ] **FTTG-79** — Add cover photo (`cover.jpg` → `/public`, wire up `next/image` in `app/page.tsx`)
+- [ ] **FTTG-80** — Set `ADMIN_PASSWORD` in Vercel env vars
+- [ ] **FTTG-81** — Deploy mamajoshua to Vercel (blocked by FTTG-80)
+- [ ] **FTTG-82** — Replace JSON file store with persistent database (Vercel KV / Supabase) before real donations go live
+
+---
+
 ## Session 1 — 2026-07-01
 
 ### Work Done
