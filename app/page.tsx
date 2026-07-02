@@ -3,8 +3,9 @@ import { getSiteConfig } from '@/lib/config'
 import { Donation } from '@/types'
 import Image from 'next/image'
 import CopyButton from '@/components/CopyButton'
-import ShareButtons from '@/components/ShareButtons'
-import DonateButton from '@/components/DonateButton'
+import CTAWithShare from '@/components/CTAWithShare'
+import AnimatedDonut from '@/components/AnimatedDonut'
+import AnimatedCounter from '@/components/AnimatedCounter'
 
 function timeAgo(dateStr: string): string {
   const diff = Date.now() - new Date(dateStr).getTime()
@@ -59,7 +60,8 @@ const CoverPhoto = ({ className }: { className?: string }) => (
       src="/cover.jpeg"
       alt="Mrs Rose Joshua"
       fill
-      className="object-cover object-center"
+      className="object-cover"
+      style={{ objectPosition: '50% 0%' }}
       priority
     />
   </div>
@@ -76,7 +78,7 @@ export default async function Home() {
 
       {/* ── MOBILE hero with name overlay ── */}
       <div className="relative lg:hidden">
-        <CoverPhoto className="w-full h-64" />
+        <CoverPhoto className="w-full h-96" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 px-5 py-5">
           <p className="text-[11px] font-semibold text-white/50 uppercase tracking-widest mb-1">
@@ -96,7 +98,7 @@ export default async function Home() {
           <div className="order-2 lg:order-1 space-y-4">
 
             {/* Desktop hero */}
-            <div className="hidden lg:block relative w-full h-80 rounded-2xl overflow-hidden shadow-lg">
+            <div className="hidden lg:block relative w-full h-[420px] rounded-2xl overflow-hidden shadow-lg">
               <CoverPhoto className="w-full h-full" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 px-8 py-7">
@@ -121,10 +123,6 @@ export default async function Home() {
               </div>
             </div>
 
-            {/* Share — left col on desktop, below action on mobile */}
-            <div className="px-4 lg:px-0">
-              <ShareButtons message={config.shareMessage} />
-            </div>
           </div>
 
           {/* ════ RIGHT: action panel ════ */}
@@ -133,19 +131,21 @@ export default async function Home() {
             {/* Progress — donut chart */}
             <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
               <div className="flex items-center gap-5">
-                <DonutChart pct={progressPct} />
+                <AnimatedDonut pct={progressPct} />
                 <div className="flex-1">
                   <div className="text-3xl font-black text-gray-900 tracking-tight leading-none">
-                    ${totalRaised.toLocaleString()}
+                    <AnimatedCounter value={totalRaised} />
                   </div>
-                  <div className="text-gray-400 text-xs mt-1">
-                    raised of ${config.goal.toLocaleString()} goal
+                  <div className="mt-1.5 flex items-baseline gap-1">
+                    <span className="text-sm font-semibold text-gray-500">raised of</span>
+                    <span className="text-sm font-bold text-gray-800">${config.goal.toLocaleString()}</span>
+                    <span className="text-sm font-semibold text-gray-500">goal</span>
                   </div>
-                  <div className="text-gray-400 text-xs mt-2 flex items-center gap-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <div className="mt-2 flex items-center gap-1.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
                     </svg>
-                    {approved.length} donation{approved.length !== 1 ? 's' : ''}
+                    <span className="text-sm font-semibold text-gray-600">{approved.length} donation{approved.length !== 1 ? 's' : ''}</span>
                   </div>
                 </div>
               </div>
@@ -171,8 +171,8 @@ export default async function Home() {
               <p className="text-xs text-gray-400 mt-2.5 pl-0.5">{config.zelle.instructions}</p>
             </div>
 
-            {/* CTA */}
-            <DonateButton />
+            {/* CTA + Share */}
+            <CTAWithShare message={config.shareMessage} />
 
             {/* Recent donations */}
             {approved.length > 0 && (
