@@ -21,166 +21,101 @@ export default async function Image() {
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
+          justifyContent: 'space-between',
           backgroundColor: '#0f172a',
           padding: '64px 72px',
           fontFamily: 'ui-sans-serif, system-ui, -apple-system, sans-serif',
-          position: 'relative',
         }}
       >
-        {/* Subtle top-right glow */}
-        <div
-          style={{
-            position: 'absolute',
-            top: -120,
-            right: -120,
-            width: 480,
-            height: 480,
+        {/* Header badge */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={{
+            width: 10,
+            height: 10,
             borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%)',
-          }}
-        />
-
-        {/* Header row: candle + label */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 36 }}>
-          <div
-            style={{
-              width: 52,
-              height: 52,
-              backgroundColor: '#1e293b',
-              borderRadius: 14,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: 28,
-            }}
-          >
-            🕯️
-          </div>
-          <span
-            style={{
-              color: '#64748b',
-              fontSize: 16,
-              fontWeight: 700,
-              letterSpacing: 3,
-              textTransform: 'uppercase',
-            }}
-          >
+            backgroundColor: '#3b82f6',
+          }} />
+          <div style={{ color: '#64748b', fontSize: 16, fontWeight: 700, letterSpacing: 3 }}>
             FUNDRAISER
-          </span>
+          </div>
         </div>
 
         {/* Main title */}
-        <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'center' }}>
-          <div
-            style={{
-              color: '#94a3b8',
-              fontSize: 22,
-              fontWeight: 500,
-              marginBottom: 12,
-            }}
-          >
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div style={{ color: '#94a3b8', fontSize: 24, fontWeight: 500, marginBottom: 10 }}>
             Help us lay
           </div>
-          <div
-            style={{
-              color: '#f1f5f9',
-              fontSize: 68,
-              fontWeight: 900,
-              lineHeight: 1.05,
-              letterSpacing: -2,
-              marginBottom: 10,
-            }}
-          >
+          <div style={{
+            color: '#f1f5f9',
+            fontSize: 72,
+            fontWeight: 900,
+            lineHeight: 1.05,
+            letterSpacing: -2,
+            marginBottom: 10,
+          }}>
             {config.deceasedName}
           </div>
-          <div
-            style={{
-              color: '#94a3b8',
-              fontSize: 22,
-              fontWeight: 500,
-            }}
-          >
+          <div style={{ color: '#94a3b8', fontSize: 24, fontWeight: 500 }}>
             to rest with dignity.
           </div>
         </div>
 
-        {/* Bottom: progress bar + stats */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+        {/* Bottom: bar + stats */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
 
-          {/* Progress track */}
-          <div
-            style={{
-              width: '100%',
-              height: 10,
-              backgroundColor: '#1e293b',
+          {/* Progress bar */}
+          <div style={{
+            display: 'flex',
+            width: '100%',
+            height: 10,
+            backgroundColor: '#1e293b',
+            borderRadius: 99,
+            overflow: 'hidden',
+          }}>
+            <div style={{
+              width: `${Math.max(pct, 0.5)}%`,
+              height: '100%',
+              backgroundColor: '#3b82f6',
               borderRadius: 99,
-              overflow: 'hidden',
-              display: 'flex',
-            }}
-          >
-            <div
-              style={{
-                width: `${pct}%`,
-                minWidth: pct > 0 ? 16 : 0,
-                height: '100%',
-                backgroundColor: '#3b82f6',
-                borderRadius: 99,
-              }}
-            />
+            }} />
           </div>
 
           {/* Stats row */}
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'flex-end',
-              justifyContent: 'space-between',
-            }}
-          >
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+
             {/* Left: amount */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-              <div
-                style={{
-                  color: '#f8fafc',
-                  fontSize: 52,
-                  fontWeight: 900,
-                  lineHeight: 1,
-                  letterSpacing: -1,
-                }}
-              >
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              <div style={{
+                color: '#f8fafc',
+                fontSize: 56,
+                fontWeight: 900,
+                lineHeight: 1,
+                letterSpacing: -1,
+              }}>
                 ${total.toLocaleString()}
               </div>
-              <div style={{ color: '#475569', fontSize: 18 }}>
-                raised of ${config.goal.toLocaleString()} goal
+              <div style={{ color: '#475569', fontSize: 20 }}>
+                raised of ${config.goal.toLocaleString()} goal · {donors.length} donation{donors.length !== 1 ? 's' : ''}
               </div>
             </div>
 
-            {/* Right: pct + donors */}
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'flex-end',
-                gap: 4,
-              }}
-            >
-              <div
-                style={{
-                  color: '#60a5fa',
-                  fontSize: 52,
-                  fontWeight: 900,
-                  lineHeight: 1,
-                  letterSpacing: -1,
-                }}
-              >
+            {/* Right: pct */}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6 }}>
+              <div style={{
+                color: '#60a5fa',
+                fontSize: 56,
+                fontWeight: 900,
+                lineHeight: 1,
+                letterSpacing: -1,
+              }}>
                 {pctLabel}%
               </div>
-              <div style={{ color: '#475569', fontSize: 18 }}>
-                {donors.length} donation{donors.length !== 1 ? 's' : ''}
+              <div style={{ color: '#475569', fontSize: 20 }}>
+                funded
               </div>
             </div>
-          </div>
 
+          </div>
         </div>
       </div>
     ),
