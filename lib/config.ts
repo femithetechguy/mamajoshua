@@ -11,6 +11,7 @@ export interface SiteConfig {
     contact: string
     instructions: string
   }
+  shareMessage: string
   story: string[]
 }
 
