@@ -1,8 +1,10 @@
 import { getApprovedDonations, getTotalRaised } from '@/lib/donations'
 import { getSiteConfig } from '@/lib/config'
 import { Donation } from '@/types'
+import Image from 'next/image'
 import CopyButton from '@/components/CopyButton'
 import ShareButtons from '@/components/ShareButtons'
+import DonateButton from '@/components/DonateButton'
 
 function timeAgo(dateStr: string): string {
   const diff = Date.now() - new Date(dateStr).getTime()
@@ -52,13 +54,14 @@ function DonutChart({ pct }: { pct: number }) {
 }
 
 const CoverPhoto = ({ className }: { className?: string }) => (
-  <div className={`bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 overflow-hidden ${className}`}>
-    <div className="w-full h-full flex flex-col items-center justify-center gap-2 text-slate-500">
-      <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3 21h18M3.75 3h16.5A.75.75 0 0121 3.75v13.5a.75.75 0 01-.75.75H3.75A.75.75 0 013 17.25V3.75A.75.75 0 013.75 3z" />
-      </svg>
-      <span className="text-xs">Add cover.jpg to /public</span>
-    </div>
+  <div className={`relative bg-slate-900 overflow-hidden ${className}`}>
+    <Image
+      src="/cover.jpeg"
+      alt="Mrs Rose Joshua"
+      fill
+      className="object-cover object-center"
+      priority
+    />
   </div>
 )
 
@@ -169,15 +172,7 @@ export default async function Home() {
             </div>
 
             {/* CTA */}
-            <a
-              href="/confirm"
-              className="flex items-center justify-center gap-2 w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold py-4 rounded-2xl transition-colors text-sm shadow-md shadow-blue-200"
-            >
-              I already donated — confirm here
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-              </svg>
-            </a>
+            <DonateButton />
 
             {/* Recent donations */}
             {approved.length > 0 && (
