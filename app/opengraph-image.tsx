@@ -8,8 +8,10 @@ export const contentType = 'image/png'
 
 export default async function Image() {
   const config = getSiteConfig()
-  const total = getTotalRaised()
-  const donors = getApprovedDonations()
+  const [total, donors] = await Promise.all([
+    getTotalRaised(),
+    getApprovedDonations(),
+  ])
   const pct = Math.min((total / config.goal) * 100, 100)
   const pctLabel = pct < 1 ? '<1' : Math.round(pct).toString()
 

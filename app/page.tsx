@@ -69,8 +69,10 @@ const CoverPhoto = ({ className }: { className?: string }) => (
 
 export default async function Home() {
   const config = getSiteConfig()
-  const approved: Donation[] = getApprovedDonations()
-  const totalRaised = getTotalRaised()
+  const [approved, totalRaised]: [Donation[], number] = await Promise.all([
+    getApprovedDonations(),
+    getTotalRaised(),
+  ])
   const progressPct = Math.min((totalRaised / config.goal) * 100, 100)
 
   return (

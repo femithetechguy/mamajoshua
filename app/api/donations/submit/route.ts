@@ -1,12 +1,13 @@
+// Ref FTTG-82 — switched from JSON file to PostgreSQL
 import { NextRequest, NextResponse } from 'next/server'
 import { randomUUID } from 'crypto'
-import { readDonations, writeDonations } from '@/lib/donations'
+import { insertDonation } from '@/lib/donations'
 import { Donation } from '@/types'
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
-    const { fullName, amount, anonymous } = body
+    const { fullName, amount, contact, anonymous } = body
 
     if (!fullName || !amount) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
@@ -18,13 +19,12 @@ export async function POST(req: NextRequest) {
       displayName: anonymous ? 'Anonymous' : fullName.trim(),
       amount: Number(amount),
       anonymous: Boolean(anonymous),
+      contact: contact?.trim() || undefined,
       status: 'pending',
       submittedAt: new Date().toISOString(),
     }
 
-    const donations = readDonations()
-    donations.unshift(donation)
-    writeDonations(donations)
+    await insertDonation(donation)
 
     return NextResponse.json({ success: true }, { status: 201 })
   } catch {
