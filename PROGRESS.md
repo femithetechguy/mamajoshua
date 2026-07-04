@@ -1,5 +1,80 @@
 # mamajoshua — Progress Log
 
+---
+
+## Session 5 — 2026-07-04
+
+### Work Done
+
+**FTTG-103 — PostgreSQL DB wired to lib/donations.ts:**
+- `lib/db.ts` — singleton `pg.Pool` with global caching for hot-reload, SSL auto-detect (localhost vs hosted)
+- `lib/donations.ts` — full rewrite; all functions now async and query Postgres
+- All callers updated: `app/page.tsx`, `app/opengraph-image.tsx`, `app/api/admin/donations/route.ts`, `app/api/admin/donations/[id]/route.ts`
+- `types/index.ts` — added optional `contact` field to `Donation` interface
+
+**FTTG-104 — Auto-approve donations + nodemailer email alert:**
+- `app/api/donations/submit/route.ts` — status set to `'approved'` on insert; fires `sendDonationAlert()` fire-and-forget (email failures don't block the API)
+- `lib/email.ts` — nodemailer transporter; HTML alert email with donor table, yellow warning box, admin panel link
+- `types/nodemailer.d.ts` — minimal type shim (avoids needing `@types/nodemailer` installed)
+- `.env.local` — placeholders for `EMAIL_HOST`, `EMAIL_PORT`, `EMAIL_USER`, `EMAIL_PASS`, `EMAIL_TO`, `NEXT_PUBLIC_BASE_URL`
+
+**FTTG-86/87/88/89 — Mobile fixes, UX polish:**
+- Scrollable overlay pattern in `ConfirmModal.tsx` prevents modal expansion when mobile keyboard opens
+- iOS zoom fix: all modal inputs bumped to `text-base` (16px)
+- Step 1/2 badges in Zelle card and confirm button
+- Hero title: `text-[28px]` desktop, `text-[20px]` mobile (2-line max)
+- Optional contact input (phone or email) added to ConfirmModal
+
+**FTTG-82 — DB schema + seeding scripts:**
+- `scripts/sql/001_create_tables.sql` — idempotent donations table with indexes
+- `scripts/sql/002_seed_donations.sql` — 10 seed rows with `ON CONFLICT (id) DO NOTHING`
+- `scripts/migrate.js` — reads + runs all `sql/*.sql` files in order via `pg.Client`; loads `DATABASE_URL` from `.env.local` via dotenv
+- `scripts/seed.js` — reads `data/donations.json`, inserts via parameterised queries, logs inserted/skipped counts
+- Migration ran successfully on Neon Postgres; 10 rows seeded
+
+### Pending
+
+- [ ] **Fill in email env vars** in `.env.local`: `EMAIL_USER`, `EMAIL_PASS`, `EMAIL_TO`, `NEXT_PUBLIC_BASE_URL`
+- [ ] **Add all env vars to Vercel** (FTTG-80): `DATABASE_URL`, `EMAIL_HOST`, `EMAIL_PORT`, `EMAIL_USER`, `EMAIL_PASS`, `EMAIL_TO`, `NEXT_PUBLIC_BASE_URL`, real `ADMIN_PASSWORD`
+- [ ] **Delete `app-remake` remote branch** (`git push origin --delete app-remake`)
+- [ ] **Open PR develop → main** on GitHub after pushing
+
+### Commit
+
+```
+Fixes FTTG-104: auto-approve donations, nodemailer alert, nodemailer type shim
+```
+
+Files: `lib/email.ts`, `types/nodemailer.d.ts`, `app/api/donations/submit/route.ts`, `.env.local`, `lib/db.ts`, `package.json`, `package-lock.json`
+
+---
+
+## Session 4 — 2026-07-03
+
+### Work Done
+
+**FTTG-82 — Satori OG image fix:**
+- `app/opengraph-image.tsx` — fixed multi-child text node errors by switching to template literals; updated to await async DB calls
+
+**FTTG-86 — Mobile modal fix (initial):**
+- `components/ConfirmModal.tsx` — scrollable overlay pattern
+
+### Pending (carried to Session 5)
+
+- See Session 5 above
+
+---
+
+## Session 3 — 2026-07-02
+
+### Work Done
+
+**FTTG-82 — DB wiring groundwork:**
+- `lib/db.ts` initial version
+- `scripts/` folder scaffolded
+
+---
+
 ## Session 2 — 2026-07-01
 
 ### Work Done

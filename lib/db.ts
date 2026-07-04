@@ -15,13 +15,19 @@ declare global {
   var _pgPool: Pool | undefined
 }
 
+// Detect localhost so we don't force SSL on local Postgres.
+// For all hosted providers (Supabase, Railway, Neon, etc.) SSL is always on.
+const isLocal = process.env.DATABASE_URL?.includes('localhost') ||
+                process.env.DATABASE_URL?.includes('127.0.0.1')
+
 const pool =
   global._pgPool ??
   new Pool({
     connectionString: process.env.DATABASE_URL,
-    ssl: process.env.NODE_ENV === 'production'
-      ? { rejectUnauthorized: false }
-      : false,
+    // Explicit ssl object silences the pg sslmode deprecation warning.
+    // rejectUnauthorized: false accepts self-signed certs (required by most
+    // hosted providers). Local connections skip SSL entirely.
+    ssl: isLocal ? false : { rejectUnauthorized: false },
     max: 5, // keep pool small — Vercel functions are short-lived
   })
 

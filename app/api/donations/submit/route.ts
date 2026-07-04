@@ -1,7 +1,9 @@
-// Ref FTTG-82 — switched from JSON file to PostgreSQL
+// Ref FTTG-104 — auto-approve donations + nodemailer alert on submission
+// Ref FTTG-82  — PostgreSQL insert via lib/donations
 import { NextRequest, NextResponse } from 'next/server'
 import { randomUUID } from 'crypto'
 import { insertDonation } from '@/lib/donations'
+import { sendDonationAlert } from '@/lib/email'
 import { Donation } from '@/types'
 
 export async function POST(req: NextRequest) {
@@ -20,11 +22,19 @@ export async function POST(req: NextRequest) {
       amount: Number(amount),
       anonymous: Boolean(anonymous),
       contact: contact?.trim() || undefined,
-      status: 'pending',
+      // Auto-approved — shows on page immediately (FTTG-104).
+      // Organiser receives an email alert and can reject via /admin if suspicious.
+      status: 'approved',
       submittedAt: new Date().toISOString(),
     }
 
     await insertDonation(donation)
+
+    // Fire alert email — intentionally not awaited in the critical path.
+    // If email fails, the donation is still saved; we just log the error.
+    sendDonationAlert(donation).catch(err =>
+      console.error('[email] Failed to send donation alert:', err?.message ?? err)
+    )
 
     return NextResponse.json({ success: true }, { status: 201 })
   } catch {
