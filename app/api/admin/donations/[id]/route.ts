@@ -1,5 +1,6 @@
+// Ref FTTG-82 — switched from JSON file to PostgreSQL
 import { NextRequest, NextResponse } from 'next/server'
-import { readDonations, writeDonations } from '@/lib/donations'
+import { updateDonationStatus } from '@/lib/donations'
 import { DonationStatus } from '@/types'
 
 function isAuthorized(req: NextRequest): boolean {
@@ -22,15 +23,11 @@ export async function PATCH(
     return NextResponse.json({ error: 'Invalid status' }, { status: 400 })
   }
 
-  const donations = readDonations()
-  const index = donations.findIndex(d => d.id === id)
+  const updated = await updateDonationStatus(id, status)
 
-  if (index === -1) {
+  if (!updated) {
     return NextResponse.json({ error: 'Donation not found' }, { status: 404 })
   }
-
-  donations[index].status = status
-  writeDonations(donations)
 
   return NextResponse.json({ success: true })
 }

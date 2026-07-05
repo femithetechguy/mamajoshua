@@ -5,11 +5,15 @@ import { getTotalRaised, getApprovedDonations } from '@/lib/donations'
 export const alt = 'Fundraiser — Help Us Lay Mrs Rose Joshua to Rest'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
+// Skip static generation — queries the DB and must run at request time
+export const dynamic = 'force-dynamic'
 
 export default async function Image() {
   const config = getSiteConfig()
-  const total = getTotalRaised()
-  const donors = getApprovedDonations()
+  const [total, donors] = await Promise.all([
+    getTotalRaised(),
+    getApprovedDonations(),
+  ])
   const pct = Math.min((total / config.goal) * 100, 100)
   const pctLabel = pct < 1 ? '<1' : Math.round(pct).toString()
 
