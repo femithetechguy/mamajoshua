@@ -30,11 +30,14 @@ export async function POST(req: NextRequest) {
 
     await insertDonation(donation)
 
-    // Fire alert email — intentionally not awaited in the critical path.
-    // If email fails, the donation is still saved; we just log the error.
-    sendDonationAlert(donation).catch(err =>
-      console.error('[email] Failed to send donation alert:', err?.message ?? err)
-    )
+    // Await email — Vercel functions shut down immediately after response,
+    // so fire-and-forget never completes in production.
+    try {
+      await sendDonationAlert(donation)
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err)
+      console.error('[email] Failed to send donation alert:', msg)
+    }
 
     return NextResponse.json({ success: true }, { status: 201 })
   } catch {
