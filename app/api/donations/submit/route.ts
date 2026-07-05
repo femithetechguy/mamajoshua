@@ -22,8 +22,8 @@ export async function POST(req: NextRequest) {
       amount: Number(amount),
       anonymous: Boolean(anonymous),
       contact: contact?.trim() || undefined,
-      // Auto-approved — shows on page immediately (FTTG-104).
-      // Organiser receives an email alert and can reject via /admin if suspicious.
+      // Auto-approved — shows on page immediately.
+      // Reject suspicious entries via /admin if needed.
       status: 'approved',
       submittedAt: new Date().toISOString(),
     }
