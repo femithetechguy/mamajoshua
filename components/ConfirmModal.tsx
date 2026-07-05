@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 interface Props {
   isOpen: boolean
@@ -8,6 +9,7 @@ interface Props {
 }
 
 export default function ConfirmModal({ isOpen, onClose }: Props) {
+  const router = useRouter()
   const [form, setForm] = useState({ fullName: '', amount: '', contact: '', anonymous: false })
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
 
@@ -41,7 +43,12 @@ export default function ConfirmModal({ isOpen, onClose }: Props) {
           anonymous: form.anonymous,
         }),
       })
-      setStatus(res.ok ? 'success' : 'error')
+      if (res.ok) {
+        setStatus('success')
+        router.refresh() // re-fetch server component data so totals update instantly
+      } else {
+        setStatus('error')
+      }
     } catch {
       setStatus('error')
     }
