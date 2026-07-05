@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { getApprovedDonations, getTotalRaised } from '@/lib/donations'
 import { getSiteConfig } from '@/lib/config'
 import { Donation } from '@/types'
@@ -159,11 +161,13 @@ export default async function Home() {
                 <div className="w-5 h-5 rounded-full bg-gray-900 flex items-center justify-center shrink-0">
                   <span className="text-[10px] font-black text-white leading-none">1</span>
                 </div>
-                <div className="w-7 h-7 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                {/* Zelle brand badge */}
+                <span className="inline-flex items-center gap-1 bg-[#6D1ED4] text-white text-[11px] font-black tracking-wide px-2.5 py-1 rounded-full shrink-0" style={{fontFamily:'Arial,sans-serif'}}>
+                  <svg viewBox="0 0 12 12" className="w-2.5 h-2.5 fill-white shrink-0" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1h10L4.5 7.5H11V11H1L7.5 4.5H1V1z"/>
                   </svg>
-                </div>
+                  Zelle
+                </span>
                 <span className="font-bold text-gray-900 text-sm">Send via Zelle</span>
               </div>
               <div className="flex items-center justify-between bg-gray-50 rounded-xl px-4 py-3 border border-gray-100">
